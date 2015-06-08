@@ -85,8 +85,9 @@ public class ProjektiActivity extends ExpandableListActivity {
 
     public void FillList2() {
 
-        //ExpandableListView expandableList = getExpandableListView();
         ExpandableListView expandableList = (ExpandableListView) findViewById(R.id.ExpListaProjekata);
+        expandableList = getExpandableListView();
+
         expandableList.setDividerHeight(2);
         expandableList.setGroupIndicator(null);
         expandableList.setClickable(true);
@@ -96,7 +97,10 @@ public class ProjektiActivity extends ExpandableListActivity {
 
         // Create the Adapter
         MyExpandableAdapter adapter = new MyExpandableAdapter(parentItems, childItems);
-        adapter.setInflater(LayoutInflater.from(expandableList.getContext()), this);
+        LayoutInflater  inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                //TextView textview1 = (TextView) inflater.inflate(R.id.textView1, null);
+                ExpandableListView expandableListView = (ExpandableListView) inflater.inflate(R.id.ExpListaProjekata, null);
+        adapter.setInflater(inflater, this);
         //adapter.setInflater((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE), this);
 
         // Set the Adapter to expandableList
