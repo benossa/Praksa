@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -32,6 +33,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.net.*;
@@ -43,7 +45,11 @@ import java.net.URL;
 public class LoginActivity extends ActionBarActivity {
     TextView content;
 
+
     public void Logiraj(final String username, final String password) {
+
+        //button.cancelPendingInputEvents();
+        //button.setText("Logiram...");
         new RetrieveFeedTask().execute("");
     }
 
@@ -54,6 +60,8 @@ public class LoginActivity extends ActionBarActivity {
         Button button = (Button) findViewById(R.id.btn_login);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                //v.cancelPendingInputEvents();
+                //v.setText("Logiram...");
                 Logiraj("ERM", "venture");
             }
         });
@@ -68,9 +76,7 @@ public class LoginActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -128,6 +134,14 @@ public class LoginActivity extends ActionBarActivity {
 
                         ResponseHandler<String> responseHandler = new BasicResponseHandler();
                         SetServerString = Client.execute(http, responseHandler);
+                        //JSONArray result = new JSONArray(SetServerString);
+                        //JSONObject object1 = result.getJSONObject(0);
+
+
+                        //SharedPreferences settings = getSharedPreferences("jwttoken", 0);
+                        //SharedPreferences.Editor editor = settings.edit();
+                        //editor.putString("jwttoken", object1.getString("token"));
+                        //editor.apply();
 
                         // Show response on activity
 
