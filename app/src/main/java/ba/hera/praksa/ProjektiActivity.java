@@ -8,20 +8,26 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.DataSetObserver;
 import android.os.AsyncTask;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnChildClickListener;
+import android.widget.ExpandableListView.OnGroupClickListener;
+import android.widget.ExpandableListView.OnGroupCollapseListener;
+import android.widget.ExpandableListView.OnGroupExpandListener;
+import java.util.HashMap;
+import java.util.List;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -30,31 +36,43 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
+public class ProjektiActivity extends Activity  {
 
-public class ProjektiActivity extends ExpandableListActivity {
 
+    ba.hera.praksa.ExpandableListAdapter listAdapter;
+    ExpandableListView expListView;
+    List<String> listDataHeader;
+    HashMap<String, List<String>> listDataChild;
 
-    private ArrayList<String> parentItems = new ArrayList<String>();
-    private ArrayList<Object> childItems = new ArrayList<Object>();
     private ArrayList<Projekat> listaprojekata = new ArrayList<>();
     public Projekat temp = new Projekat();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_projekti);
-        //FillList();
+        setContentView(R.layout.activity_projekti);
         try {
-            new RetrieveFeedTask().execute("");
+
+            new RetrieveFeedTask().execute("").get();
+            if(listDataHeader!=null)
+            {
+                expListView = (ExpandableListView) findViewById(R.id.lvExp);
+                listAdapter = new ba.hera.praksa.ExpandableListAdapter(this, listDataHeader, listDataChild);
+                expListView.setAdapter(listAdapter);
+                for (int i=0; i<listAdapter.getGroupCount();i++)
+                {
+                    expListView.expandGroup(i);
+                }
+            }
+            else
+                Toast.makeText(getApplicationContext(), "Lista prazna !", Toast.LENGTH_LONG).show();
 
         } catch (Exception ex) {
-            Toast.makeText(getApplicationContext(), ex.toString(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "OnCreate: " + ex.toString(), Toast.LENGTH_LONG).show();
         }
 
 
@@ -69,9 +87,6 @@ public class ProjektiActivity extends ExpandableListActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -83,44 +98,22 @@ public class ProjektiActivity extends ExpandableListActivity {
 
     }
 
-    public void FillList2() {
-
-        ExpandableListView expandableList = (ExpandableListView) findViewById(R.id.ExpListaProjekata);
-        expandableList = getExpandableListView();
-
-        expandableList.setDividerHeight(2);
-        expandableList.setGroupIndicator(null);
-        expandableList.setClickable(true);
-
-
-        setGroupParents();
-
-        // Create the Adapter
-        MyExpandableAdapter adapter = new MyExpandableAdapter(parentItems, childItems);
-        LayoutInflater  inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                //TextView textview1 = (TextView) inflater.inflate(R.id.textView1, null);
-                ExpandableListView expandableListView = (ExpandableListView) inflater.inflate(R.id.ExpListaProjekata, null);
-        adapter.setInflater(inflater, this);
-        //adapter.setInflater((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE), this);
-
-        // Set the Adapter to expandableList
-        expandableList.setAdapter(adapter);
-
-        expandableList.setOnChildClickListener(this);
-    }
-
-    public void setGroupParents() {
-
-        ArrayList<String> child = new ArrayList<String>();
-        for (int i=0; i<listaprojekata.size();i++)
+    public void PripremiPodatke()
+    {
+        listDataHeader = new ArrayList<String>();
+        listDataChild = new HashMap<String, List<String>>();
+        //Toast.makeText(getApplicationContext(), listaprojekata.size(), Toast.LENGTH_LONG).show();
+        if(listaprojekata.size() > 0)
+        for (int i=0;i<listaprojekata.size();i++)
         {
-            child = new ArrayList<String>();
-            parentItems.add(listaprojekata.get(i).Name);
-            child.add("ID: "+listaprojekata.get(i).ID);
-            child.add("Evaluated Risks: "+listaprojekata.get(i).EvaluatedRisks);
-            child.add("Total Risks: "+listaprojekata.get(i).TotalRisks);
-            child.add("Treated Risks: "+listaprojekata.get(i).TreatedRisks);
-            childItems.add(child);
+            List<String> Detalji = new ArrayList<String>();
+
+            listDataHeader.add(listaprojekata.get(i).Name);
+            Detalji.add("ID: "+listaprojekata.get(i).ID);
+            Detalji.add("Evaluated Risks: "+listaprojekata.get(i).EvaluatedRisks);
+            Detalji.add("Total Risks: "+listaprojekata.get(i).TotalRisks);
+            Detalji.add("Treated Risks: "+listaprojekata.get(i).TreatedRisks);
+            listDataChild.put(listDataHeader.get(i), Detalji);
         }
     }
 
@@ -146,18 +139,18 @@ public class ProjektiActivity extends ExpandableListActivity {
                     HttpResponse response = Client.execute(get);
 
                     // provjeri o kojem se kodu radi, 100 informacije, 200 OK, 400 i 500 Error
-                    int status = response.getStatusLine().getStatusCode();
-                        HttpEntity entity = response.getEntity();
-                        String data = EntityUtils.toString(entity);
-                        JSONArray result = new JSONArray(data);
-                        for (int n = 0; n < result.length(); n++)
-                        {
-                            JSONObject obj = result.getJSONObject(n);   //JSONArray parsiramo u JSONObjekat
-                            temp = new Projekat();          //
-                            temp.FromJSON(obj);             //JSON objekat parsiramo u projekat
-                            listaprojekata.add(temp);       // temp objekat ubacimo na listu
-                        }
-
+                    //int status = response.getStatusLine().getStatusCode();
+                    HttpEntity entity = response.getEntity();
+                    String data = EntityUtils.toString(entity);
+                    JSONArray result = new JSONArray(data);
+                    for (int n = 0; n < result.length(); n++)
+                    {
+                        JSONObject obj = result.getJSONObject(n);   //JSONArray parsiramo u JSONObjekat
+                        temp = new Projekat();          //
+                        temp.FromJSON(obj);             //JSON objekat parsiramo u projekat
+                        listaprojekata.add(temp);       // temp objekat ubacimo na listu
+                    }
+                    PripremiPodatke();
 
                 } catch (Exception ex) {return "Error:" + ex.toString();}
             } catch (Exception ex) {return "Error:" + ex.toString();}
@@ -174,8 +167,7 @@ public class ProjektiActivity extends ExpandableListActivity {
                 Toast.makeText(getApplicationContext(), "onPostExecute: "+response, Toast.LENGTH_LONG).show();
             } else {
                 try {
-                    Toast.makeText(getApplicationContext(), "Preuzeta lista", Toast.LENGTH_LONG).show();
-                    FillList2();    //kada pokupi objekte onda ih ucitaje na listu
+                    //Toast.makeText(getApplicationContext(), "Preuzeta lista", Toast.LENGTH_LONG).show();
 
                 } catch (Exception ex) {
                     Toast.makeText(getApplicationContext(), ex.toString(), Toast.LENGTH_LONG).show();
