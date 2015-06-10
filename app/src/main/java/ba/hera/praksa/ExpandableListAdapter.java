@@ -6,7 +6,10 @@
         package ba.hera.praksa;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import android.util.Log;
@@ -20,14 +23,16 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import static android.support.v4.app.ActivityCompat.startActivity;
+
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
-
-    //private Activity activity;
     private Context _context;
     private List<String> _listDataHeader; // header titles
     private HashMap<String, List<String>> _listDataChild;
+    public ArrayList<Projekat> projekti = new ArrayList<>();
+
 
     public ExpandableListAdapter(Context context, List<String> listDataHeader,HashMap<String, List<String>> listChildData) {
         this._context = context;
@@ -67,8 +72,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return this._listDataChild.get(this._listDataHeader.get(groupPosition))
-                .size();
+        return this._listDataChild.get(this._listDataHeader.get(groupPosition)).size();
     }
 
     @Override
@@ -80,8 +84,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     public int getGroupCount() {
         return this._listDataHeader.size();
     }
-
-
 
     @Override
     public long getGroupId(int groupPosition) {
@@ -109,11 +111,12 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v)
             {
-                Toast.makeText(_context, "groupPosition " + groupPosition,  Toast.LENGTH_LONG).show();
-                
+                if(projekti != null)
+                Toast.makeText(_context, projekti.get(groupPosition).ID,  Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(_context, Grafovi.class);
+                //startActivity(intent);
             }
         });
-
 
         return convertView;
     }
@@ -125,8 +128,15 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
-        return true;   //bilo na true ali ne zelimo to
+        return true;   //bilo na true
     }
 
+    public void SetListaProjekata(ArrayList<Projekat> projekatList)
+    {
+        if(projekatList != null) {
+            projekti = new ArrayList<>();
+            projekti = projekatList;
+        }
+    }
 
 }

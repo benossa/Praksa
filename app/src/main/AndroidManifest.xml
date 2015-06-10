@@ -22,6 +22,10 @@
             android:name=".ProjektiActivity"
             android:label="@string/title_activity_projekti" >
         </activity>
+        <activity
+            android:name=".Grafovi"
+            android:label="@string/title_activity_grafovi" >
+        </activity>
     </application>
 
 </manifest>

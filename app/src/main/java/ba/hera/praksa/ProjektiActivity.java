@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import android.view.View.OnClickListener;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -52,6 +53,7 @@ public class ProjektiActivity extends Activity  {
     private ArrayList<Projekat> listaprojekata = new ArrayList<>();
     public Projekat temp = new Projekat();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,14 +77,17 @@ public class ProjektiActivity extends Activity  {
         } catch (Exception ex) {
             Toast.makeText(getApplicationContext(), "OnCreate: " + ex.toString(), Toast.LENGTH_LONG).show();
         }
-
-
     }
 
+
+
+
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_projekti, menu);
+
         return true;
     }
 
@@ -103,7 +108,6 @@ public class ProjektiActivity extends Activity  {
     {
         listDataHeader = new ArrayList<String>();
         listDataChild = new HashMap<String, List<String>>();
-        //Toast.makeText(getApplicationContext(), listaprojekata.size(), Toast.LENGTH_LONG).show();
         if(listaprojekata.size() > 0)
         for (int i=0;i<listaprojekata.size();i++)
         {
@@ -116,6 +120,7 @@ public class ProjektiActivity extends Activity  {
             Detalji.add("Treated Risks: "+listaprojekata.get(i).TreatedRisks);
             listDataChild.put(listDataHeader.get(i), Detalji);
         }
+
     }
 
     class RetrieveFeedTask extends AsyncTask<String, Void, String> {
@@ -169,13 +174,11 @@ public class ProjektiActivity extends Activity  {
             } else {
                 try {
                     //Toast.makeText(getApplicationContext(), "Preuzeta lista", Toast.LENGTH_LONG).show();
-
+                    listAdapter.SetListaProjekata(listaprojekata);
                 } catch (Exception ex) {
                     Toast.makeText(getApplicationContext(), ex.toString(), Toast.LENGTH_LONG).show();
                 }
             }
-            // TODO: check this.exception
-            // TODO: do something with the feed
         }
     }
 
