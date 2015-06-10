@@ -9,6 +9,7 @@
     android:background="@drawable/relative"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:layout_alignParentTop="true"
     android:gravity="center"
     android:orientation="vertical"
     android:id="@+id/linear"
@@ -26,38 +27,23 @@
         android:paddingRight="20dp"
         android:layout_weight="0.25"
         android:weightSum="1"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="60dp"
         android:id="@+id/linear1">
 
-        <!--<TextView-->
-            <!--android:layout_below="@+id/ETUsername"-->
-            <!--android:id="@+id/textLogin"-->
-            <!--android:text="@string/app_name"-->
-            <!--android:textStyle="bold|italic"-->
-            <!--android:textSize="40sp"-->
-            <!--android:singleLine="true"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_centerInParent="true"-->
-            <!--android:autoText="true"-->
-            <!--android:layout_marginBottom="30dp"-->
-            <!--android:padding="10dp"-->
-            <!--android:textAlignment="center"-->
-            <!--android:textColor="#FF1919"-->
-
-            <!--/>-->
 
 
         <ImageView
             android:id="@+id/imageView1"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginBottom="70dp"
-            android:src="@mipmap/logo2" />
-
-
-
-
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="60dp"
+            android:adjustViewBounds="true"
+            android:maxWidth="300dp"
+            android:maxHeight="300dp"
+            android:scaleType="fitCenter"
+            android:layout_centerHorizontal="true"
+            android:src="@mipmap/logo"/>
 
         <EditText
         android:layout_below="@+id/textLogin"
@@ -68,6 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+
         android:background="@drawable/txt_shape"
         android:padding="12dp"
         android:layout_margin="4dp"
