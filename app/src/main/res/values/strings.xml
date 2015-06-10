@@ -9,8 +9,8 @@
     <string name="title_activity_projekti">Projekti</string>
     <string name="title_activity_grafovi">Grafovi</string>
 
-    <string name="title_section1">Tab 1</string>
-    <string name="title_section2">Tab 2</string>
-    <string name="title_section3">Tab 3</string>
+    <string name="title_section1">Broj Rizika</string>
+    <string name="title_section2">Heat Map</string>
+    <string name="title_section3">Rizici po aspektima</string>
 
 </resources>

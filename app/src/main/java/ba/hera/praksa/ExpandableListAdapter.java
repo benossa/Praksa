@@ -33,7 +33,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private HashMap<String, List<String>> _listDataChild;
     public ArrayList<Projekat> projekti = new ArrayList<>();
 
-
     public ExpandableListAdapter(Context context, List<String> listDataHeader,HashMap<String, List<String>> listChildData) {
         this._context = context;
         this._listDataHeader = listDataHeader;
@@ -113,8 +112,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             {
                 if(projekti != null)
                 Toast.makeText(_context, projekti.get(groupPosition).ID,  Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(_context, Grafovi.class);
-                //startActivity(intent);
+                StartNextActivity(projekti.get(groupPosition).ID);
             }
         });
 
@@ -137,6 +135,12 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             projekti = new ArrayList<>();
             projekti = projekatList;
         }
+    }
+    public void StartNextActivity(String ID)
+    {
+        Intent intent = new Intent(_context, Grafovi.class);
+        intent.putExtra("key",ID);
+        _context.startActivity(intent);
     }
 
 }

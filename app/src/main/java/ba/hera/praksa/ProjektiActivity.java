@@ -52,7 +52,7 @@ public class ProjektiActivity extends Activity  {
 
     private ArrayList<Projekat> listaprojekata = new ArrayList<>();
     public Projekat temp = new Projekat();
-
+    private String ProjectID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
