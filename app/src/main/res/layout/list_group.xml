@@ -4,8 +4,9 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="8dp"
-    android:background="#D5D5D5"
-    android:weightSum="1">
+    android:background="@color/HeraBlue1"
+    android:weightSum="1"
+    >
 
 
     <TextView
@@ -15,7 +16,8 @@
         android:text="Primjer naziv projekta"
         android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
         android:textSize="17sp"
-        android:textColor="#FF0040"
+        android:textColor="@color/White"
+        android:background="@color/HeraBlue1"
         android:layout_weight="2.34"
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true" />
@@ -24,6 +26,7 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="45dp"
         android:layout_height="45dp"
+        android:background="@drawable/btn_shape_selector2"
         android:text=">>"
         android:id="@+id/BtnGoTab"
         android:layout_gravity="right"
