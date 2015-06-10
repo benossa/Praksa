@@ -1,16 +1,23 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="ba.hera.praksa.ProjektiActivity">
+    tools:context="ba.hera.praksa.ProjektiActivity"
+    android:contentDescription="HeraApp">
 
     <TextView
-        android:text="Lista Projekata"
+        android:text="ERM-Venture :: Lista Projekata"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:id="@+id/textView" />
+        android:id="@+id/textView"
+        android:paddingLeft="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="20sp"/>
 
     <ExpandableListView
         android:id="@+id/lvExp"
