@@ -5,6 +5,12 @@
     <string name="btn_login">Sign in</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_projekti">ProjektiActivity</string>
+
+    <string name="title_activity_projekti">Projekti</string>
+    <string name="title_activity_grafovi">Grafovi</string>
+
+    <string name="title_section1">Broj Rizika</string>
+    <string name="title_section2">Heat Map</string>
+    <string name="title_section3">Rizici po aspektima</string>
 
 </resources>
