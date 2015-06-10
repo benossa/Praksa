@@ -1,11 +1,8 @@
 package ba.hera.praksa;
 
 import android.app.Activity;
-import android.app.ListActivity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.support.v7.app.ActionBarActivity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,36 +10,21 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.os.AsyncTask;
 import android.widget.Toast;
 
-
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-
-
-import org.apache.http.HttpResponse;
-import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.net.*;
-import java.io.*;
-
-import java.net.URL;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 
-public class LoginActivity extends ActionBarActivity {
+public class LoginActivity extends Activity {
     TextView content;
 
 
@@ -67,25 +49,25 @@ public class LoginActivity extends ActionBarActivity {
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.login, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.login, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//
+//        int id = item.getItemId();
+//
+//        //noinspection SimplifiableIfStatement
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 
 
 
@@ -97,7 +79,7 @@ public class LoginActivity extends ActionBarActivity {
             String SetServerString = "";
             try {
                 try {
-                    content = (TextView) findViewById(R.id.textLogin);
+//                   content = (TextView) findViewById(R.id.textLogin);
                     TextView username = (TextView)findViewById(R.id.ETUsername);
                     TextView password = (TextView)findViewById(R.id.ETPassword);
 

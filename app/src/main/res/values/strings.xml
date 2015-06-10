@@ -1,6 +1,8 @@
 <resources>
-    <string name="app_name">HeraApp</string>
-
+    <string name="app_name">ERM Venture</string>
+    <string name="textEmailAddress">Username</string>
+    <string name="textPassword">Password</string>
+    <string name="btn_login">Sign in</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_projekti">Projekti</string>
