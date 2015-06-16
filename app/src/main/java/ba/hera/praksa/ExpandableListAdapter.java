@@ -138,8 +138,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     }
     public void StartNextActivity(String ID)
     {
-        Intent intent = new Intent(_context, Grafovi.class);
-        intent.putExtra("key",ID);
+        Intent intent = new Intent(_context, GrafActivity.class);
         _context.startActivity(intent);
     }
 
