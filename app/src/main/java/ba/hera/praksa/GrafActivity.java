@@ -15,11 +15,10 @@ public class GrafActivity extends FragmentActivity implements ActionBar.TabListe
     private ViewPager viewPager;
     private ActionBar actionBar;
     private TabsFragmentPagerAdapter tabsAdapter;
-    private String[] days = new String[]{"Tab1","Tab2","Tab3"};
+    private String[] days = new String[]{"Rizici po bojama","Heat Mapa","Rizici po aspektima"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         try {
             //getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
             requestWindowFeature(Window.FEATURE_ACTION_BAR);
@@ -28,8 +27,6 @@ public class GrafActivity extends FragmentActivity implements ActionBar.TabListe
             tabsAdapter = new TabsFragmentPagerAdapter(getSupportFragmentManager());
             viewPager.setAdapter(tabsAdapter);
             actionBar = getActionBar();
-            if(actionBar == null)
-                return;
             actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
             for(int i=0; i<3; i++)
             {
@@ -45,19 +42,16 @@ public class GrafActivity extends FragmentActivity implements ActionBar.TabListe
 
             @Override
             public void onPageSelected(int arg) {
-                // TODO Auto-generated method stub
                 actionBar.setSelectedNavigationItem(arg);
             }
 
             @Override
             public void onPageScrolled(int arg0, float arg1, int arg2) {
-                // TODO Auto-generated method stub
 
             }
 
             @Override
             public void onPageScrollStateChanged(int arg0) {
-                // TODO Auto-generated method stub
 
             }
         });

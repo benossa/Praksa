@@ -13,12 +13,10 @@ public class TabsFragmentPagerAdapter extends FragmentPagerAdapter {
 
     public TabsFragmentPagerAdapter(FragmentManager fm) {
         super(fm);
-        // TODO Auto-generated constructor stub
     }
 
     @Override
     public Fragment getItem(int index) {
-        // TODO Auto-generated method stub
         if(index == 0)
             return new Tab1();
         if(index == 1)
@@ -32,7 +30,6 @@ public class TabsFragmentPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        // TODO Auto-generated method stub
         return 3;
     }
 }
