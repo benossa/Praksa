@@ -5,6 +5,7 @@ package ba.hera.praksa;
  */
         import android.app.Activity;
         import android.content.Intent;
+        import android.content.SharedPreferences;
         import android.os.AsyncTask;
         import android.os.Bundle;
         import android.support.v4.app.Fragment;
@@ -38,8 +39,8 @@ public class Tab1 extends Fragment
     private ArrayList<JSONObject> ListarizikaRTP;
     private ArrayList<JSONObject> ListarizikaRTPIP;
 
-    private int ProjekatID = 23411;
-    private String Token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJFUk0iLCJpc3MiOiJFUk0iLCJpYXQiOjE0MzM2OTczMjd9.2zd4OlKjW3Yfcd_q2FOoyEGpNrFbf7EuHeIkZ8ponr0";
+    private String SelectedProjekatID;
+    private String Token;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,6 +48,9 @@ public class Tab1 extends Fragment
     {
         View view = inflater.inflate(R.layout.fragment_tab1, container, false);
         webview = (WebView) view.findViewById(R.id.webView1);
+        SharedPreferences settings = this.getActivity().getSharedPreferences("Config", 0);
+        Token = settings.getString("JWToken", ".");
+        SelectedProjekatID = settings.getString("SelectedProjekatID",".");
 
         UcitajPodatke();
 
@@ -194,9 +198,9 @@ public class Tab1 extends Fragment
 
                     HttpClient Client = new DefaultHttpClient();
                     // Create URL string
-                    String url1 = "http://heraapps.com:8081/ermVenture/resources/protected/totalRisk/" + ProjekatID;
-                    String url2 = "http://heraapps.com:8081/ermVenture/resources/protected/activePlan/" + ProjekatID;
-                    String url3 = "http://heraapps.com:8081/ermVenture/resources/protected/newPlan/" + ProjekatID;
+                    String url1 = "http://heraapps.com:8081/ermVenture/resources/protected/totalRisk/" + SelectedProjekatID;
+                    String url2 = "http://heraapps.com:8081/ermVenture/resources/protected/activePlan/" + SelectedProjekatID;
+                    String url3 = "http://heraapps.com:8081/ermVenture/resources/protected/newPlan/" + SelectedProjekatID;
 
                     HttpGet get = new HttpGet(url1);
                     get.setHeader("Content-Type", "application/json");

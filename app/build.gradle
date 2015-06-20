@@ -25,4 +25,5 @@ dependencies {
     compile files('libs/library-1.0.16.jar')
     compile files('libs/ion-2.1.4.jar')
     compile files('libs/androidasync-2.1.4.jar')
+    compile files('libs/guava-18.0.jar')
 }

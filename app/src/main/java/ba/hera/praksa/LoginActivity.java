@@ -2,36 +2,47 @@ package ba.hera.praksa;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 
 public class LoginActivity extends Activity {
-    TextView content;
 
 
-    public void Logiraj(final String username, final String password) {
+    private String UID, PW;
+    private TextView ETUsername;
+    private TextView ETPass;
+    private CheckBox cbPrijava;
 
-        //button.cancelPendingInputEvents();
-        //button.setText("Logiram...");
+    public void Logiraj() {
+
         new RetrieveFeedTask().execute("");
     }
 
@@ -40,36 +51,78 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        ETUsername = (TextView) findViewById(R.id.ETUsername);
+        ETPass = (TextView) findViewById(R.id.ETPassword);
+        cbPrijava = (CheckBox) findViewById(R.id.cbZapamtiPrijavu);
+
+        final SharedPreferences settings = getSharedPreferences("Config", 0);
+
+        boolean zl = settings.getBoolean("ZapamtiLogin", false);
+        ETUsername.setText(settings.getString("Username", ""));
+        ETPass.setText(settings.getString("PW", ""));
+
+        cbPrijava.setChecked(zl);
+        if (zl)
+        {
+            UID = settings.getString("Username", null);
+            PW = settings.getString("PW", null);
+            Toast.makeText(getApplicationContext(), "Spaseni user: " + UID + ", " + PW, Toast.LENGTH_LONG).show();
+        }
+        else
+        {
+            ETUsername.setText("");
+            ETPass.setText(""); //znaci da ne zeli spasiti podatke
+        }
+
+
+        cbPrijava.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                SharedPreferences settings = getSharedPreferences("Config", 0);
+                SharedPreferences.Editor editor = settings.edit();
+                if (isChecked) {
+                    ETUsername = (TextView) findViewById(R.id.ETUsername);
+                    ETPass = (TextView) findViewById(R.id.ETPassword);
+
+                    editor.putBoolean("ZapamtiLogin", true);
+                    editor.putString("Username", ETUsername.getText().toString());
+                    editor.putString("PW", ETPass.getText().toString());
+                    Toast.makeText(getApplicationContext(), "Podaci sacuvani", Toast.LENGTH_LONG).show();
+                } else
+                {
+                    editor.putBoolean("ZapamtiLogin", false);
+                    editor.putString("Username", null);
+                    editor.putString("PW", null);
+                    ETUsername.setText("");
+                    ETPass.setText("");
+                }
+                editor.apply();
+
+            }
+        });
+
+
         Button button = (Button) findViewById(R.id.btn_login);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //v.cancelPendingInputEvents();
-                //v.setText("Logiram...");
-                Logiraj("ERM", "venture");
+                if (ETUsername != null)
+                    UID = ETUsername.getText().toString();
+
+                if (ETPass != null)
+                    PW = ETPass.getText().toString();
+
+                if (cbPrijava.isChecked()) {
+                    SharedPreferences.Editor editor = settings.edit();
+                    editor.putString("Username", UID);
+                    editor.putString("PW", PW);
+                    editor.putBoolean("ZapamtiLogin", true);
+                    editor.apply();
+                }
+                Logiraj();
             }
         });
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.login, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
-
 
 
     class RetrieveFeedTask extends AsyncTask<String, Void, String> {
@@ -79,128 +132,60 @@ public class LoginActivity extends Activity {
         protected String doInBackground(String... urls) {
             String SetServerString = "";
             try {
-                try {
-//                   content = (TextView) findViewById(R.id.textLogin);
-                    TextView username = (TextView)findViewById(R.id.ETUsername);
-                    TextView password = (TextView)findViewById(R.id.ETPassword);
+                HttpClient Client = new DefaultHttpClient();
+                String URL = "http://heraapps.com:8081/ermVenture/resources/login";
+                HttpPost http = new HttpPost(URL);
+                http.setHeader("Content-Type", "application/json");
 
-                    HttpClient Client = new DefaultHttpClient();
-                    // Create URL string
-                    String URL = "http://heraapps.com:8081/ermVenture/resources/login";
+                /*******/
+                JSONObject object = new JSONObject();
+                object.put("name", UID);
+                object.put("password", PW);
 
-                    try {
+                String message = object.toString();
+                http.setEntity(new StringEntity(message, "UTF8"));
+                HttpResponse response = Client.execute(http);
+                HttpEntity entity = response.getEntity();
+                SetServerString = EntityUtils.toString(entity);
 
+                //int status = response.getStatusLine().getStatusCode();
+                //if (status != 200)
+                //    return "Error:";
 
-                        // Create Request to server and get response
+                JSONObject result = new JSONObject(SetServerString);
+                String token = result.getString("token");
+                SharedPreferences settings = getSharedPreferences("Config", 0);
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putString("JWToken", token);
+                editor.apply();
 
-                        HttpPost http = new HttpPost(URL);
-                        http.setHeader("Content-Type", "application/json");
-
-                        /*******/
-                        JSONObject object = new JSONObject();
-                        try {
-
-                            //object.put("name", username.getText());
-                            //object.put("password", password.getText());
-                            object.put("name", "ERM");
-                            object.put("password", "venture");
-
-
-                        } catch (Exception ex) {
-
-                        }
-
-
-                        String message = object.toString();
-                        http.setEntity(new StringEntity(message, "UTF8"));
-/************/
-
-                        ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                        SetServerString = Client.execute(http, responseHandler);
-                        //JSONArray result = new JSONArray(SetServerString);
-                        //JSONObject object1 = result.getJSONObject(0);
-
-
-                        //SharedPreferences settings = getSharedPreferences("jwttoken", 0);
-                        //SharedPreferences.Editor editor = settings.edit();
-                        //editor.putString("jwttoken", object1.getString("token"));
-                        //editor.apply();
-
-                        // Show response on activity
-
-
-                    } catch (Exception ex) {
-                        return "Error:" + ex.toString();
-                    }
-                } catch (Exception ex) {
-                    return "Error:" + ex.toString();
-                }
 
                 /****************/
                 return SetServerString;
-
                 /*****************/
-
-
-
             } catch (Exception e) {
                 return "Error:" + e.toString();
             }
         }
 
-        protected void onPostExecute(String response) {
-            if (response.contains("Error:"))
+        protected void onPostExecute(String response)
+        {
+            if (response.contains("Error:")) {
+                Toast.makeText(getApplicationContext(), "Greska u prijavi. Netocni login podaci ili nema konekcije", Toast.LENGTH_LONG).show();
+            } else
             {
-                //content.setText("Greska u prijavi !");
-                Toast.makeText(getApplicationContext(),"Greska u prijavi, provjerite konekciju.",Toast.LENGTH_LONG).show();
-            }
-            else {
-                //content.setText(response);
                 try {
                     Intent intent = new Intent(getApplicationContext(), ProjektiActivity.class);
                     LoginActivity.this.startActivity(intent);
-                }
-                catch (Exception ex) {
-                    Toast.makeText(getApplicationContext(),ex.toString(),Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), "Lista projekata", Toast.LENGTH_LONG).show();
+                } catch (Exception ex) {
+                    Toast.makeText(getApplicationContext(), ex.toString(), Toast.LENGTH_LONG).show();
                 }
             }
-            // TODO: check this.exception
-            // TODO: do something with the feed
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/*
     public class HttpGetAndroidExample extends Activity {
 
         TextView content;
@@ -221,12 +206,9 @@ public class LoginActivity extends Activity {
 
             saveme.setOnClickListener(new Button.OnClickListener() {
                 public void onClick(View v) {
-                    //ALERT MESSAGE
                     Toast.makeText(getBaseContext(), "Please wait, connecting to server.", Toast.LENGTH_LONG).show();
 
                     try {
-
-                        // URLEncode user defined data
 
                         String loginValue = URLEncoder.encode(name.getText().toString(), "UTF-8");
                         String passValue = URLEncoder.encode(pass.getText().toString(), "UTF-8");
@@ -280,5 +262,5 @@ public class LoginActivity extends Activity {
                 }
             });
         }
-    }
+    }*/
 }

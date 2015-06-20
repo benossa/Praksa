@@ -7,6 +7,7 @@
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 
 import java.util.ArrayList;
@@ -111,8 +112,14 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             public void onClick(View v)
             {
                 if(projekti != null)
-                Toast.makeText(_context, projekti.get(groupPosition).ID,  Toast.LENGTH_LONG).show();
-                StartNextActivity(projekti.get(groupPosition).ID);
+                {
+                    //Toast.makeText(_context, projekti.get(groupPosition).ID, Toast.LENGTH_LONG).show();
+                    SharedPreferences settings = _context.getSharedPreferences("Config", 0);
+                    SharedPreferences.Editor editor = settings.edit();
+                    editor.putString("SelectedProjekatID", projekti.get(groupPosition).ID);
+                    editor.apply();
+                    StartNextActivity(projekti.get(groupPosition).ID);
+                }
             }
         });
 

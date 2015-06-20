@@ -54,7 +54,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-
         android:background="@drawable/txt_shape"
         android:padding="12dp"
         android:layout_margin="4dp"
@@ -76,15 +75,21 @@
         android:layout_margin="4dp"
         />
 
-    <Button
+        <CheckBox
+            android:layout_width="297dp"
+            android:layout_height="wrap_content"
+            android:text="Zapamti login podatke"
+            android:id="@+id/cbZapamtiPrijavu"
+            android:textColor="@android:color/white"/>
+
+        <Button
         android:textSize="17sp"
         android:textColor="#fff"
         android:id="@+id/btn_login"
         android:text="@string/btn_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ETPassword"
-        android:layout_alignParentStart="true"
+        android:layout_below="@+id/cbZapamtiPrijavu"
         android:background="@drawable/btn_shape_selector"
         android:layout_marginTop="16dp"
         android:layout_marginLeft="4dp"

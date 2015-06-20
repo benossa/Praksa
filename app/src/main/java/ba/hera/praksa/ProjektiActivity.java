@@ -136,12 +136,12 @@ public class ProjektiActivity extends Activity  {
                     // Create URL string
                     String url = "http://heraapps.com:8081/ermVenture/resources/protected/projects";
 
-
                     HttpGet get = new HttpGet(url);
                     get.setHeader("Content-Type", "application/json");
-                    get.setHeader("jwttoken", "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJFUk0iLCJpc3MiOiJFUk0iLCJpYXQiOjE0MzM2OTczMjd9.2zd4OlKjW3Yfcd_q2FOoyEGpNrFbf7EuHeIkZ8ponr0");
+                    SharedPreferences settings = getSharedPreferences("Config", 0);
+                    String token = settings.getString("JWToken",".");
+                    get.setHeader("jwttoken", token);
 
-                                            //jos nije rijeseno pohrana tokena
                     HttpResponse response = Client.execute(get);
 
                     // provjeri o kojem se kodu radi, 100 informacije, 200 OK, 400 i 500 Error
