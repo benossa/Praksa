@@ -23,6 +23,9 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -66,7 +69,6 @@ public class LoginActivity extends Activity {
         {
             UID = settings.getString("Username", null);
             PW = settings.getString("PW", null);
-            Toast.makeText(getApplicationContext(), "Spaseni user: " + UID + ", " + PW, Toast.LENGTH_LONG).show();
         }
         else
         {
@@ -132,11 +134,20 @@ public class LoginActivity extends Activity {
         protected String doInBackground(String... urls) {
             String SetServerString = "";
             try {
+
+
                 HttpClient Client = new DefaultHttpClient();
                 String URL = "http://heraapps.com:8081/ermVenture/resources/login";
                 HttpPost http = new HttpPost(URL);
                 http.setHeader("Content-Type", "application/json");
 
+                /*******/ //parametri kako bi postavili timeout konekcije
+                HttpParams httpParameters = new BasicHttpParams();
+                int timeoutConnection = 3000;
+                int timeoutSocket = 3000;
+                HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
+                HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
+                http.setParams(httpParameters);
                 /*******/
                 JSONObject object = new JSONObject();
                 object.put("name", UID);

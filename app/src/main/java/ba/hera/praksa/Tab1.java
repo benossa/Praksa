@@ -78,19 +78,20 @@ public class Tab1 extends Fragment
                 + "      function drawChart() {"
                 + "        var data = google.visualization.arrayToDataTable(["
                 + "          ['Rizik', 'Broj Rizika',{ role: \"style\" }],";
-                                for(int i=0; i<Listarizika.size();i++)
-                                {
-                                    try {
-                                        content += "['" + (i+1) + "'," + Listarizika.get(i).getString("number") +
+                                if(Listarizika.size() > 0) {
+                                    for (int i = 0; i < Listarizika.size(); i++) {
+                                        try {
+                                            content += "['" + (i + 1) + "'," + Listarizika.get(i).getString("number") +
                                                     ",' color: " + Listarizika.get(i).getString("color") + "'],";
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
 
+                                    }
+                                    content.substring(0, content.lastIndexOf(",") - 1);
                                 }
-                            content.substring(0,content.lastIndexOf(",")-1);
-                content +=
-                  "        ]);"
+                                else {content += "['0', 0, 'color: #FFFFFF']"; }
+                        content +=" ]);"
                 + "        var view = new google.visualization.DataView(data);"
                 + "        view.setColumns([0, 1,"
                 + "          { calc: \"stringify\","
@@ -173,9 +174,9 @@ public class Tab1 extends Fragment
                         + "                         chart.draw(view, options); }"
                         + "    </script>"
                 + "  </head> <body>"
-                + "    <div id=\"barchart_values\" style=\"width: 350px; height: 300px;\"></div>"
-                + "    <div id=\"barchart_values2\" style=\"width: 350px; height: 300px;\"></div>"
-                + "    <div id=\"barchart_values3\" style=\"width: 350px; height: 300px;\"></div>"
+                + "    <div align=\"center\" id=\"barchart_values\" style=\"width: 350px; height: 300px;\"></div>"
+                + "    <div align=\"center\" id=\"barchart_values2\" style=\"width: 350px; height: 300px;\"></div>"
+                + "    <div align=\"center\" id=\"barchart_values3\" style=\"width: 350px; height: 300px;\"></div>"
                 + "  </body> </html>";
 
         WebSettings webSettings = webview.getSettings();
