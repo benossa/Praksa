@@ -143,8 +143,8 @@ public class LoginActivity extends Activity {
 
                 /*******/ //parametri kako bi postavili timeout konekcije
                 HttpParams httpParameters = new BasicHttpParams();
-                int timeoutConnection = 3000;
-                int timeoutSocket = 3000;
+                int timeoutConnection = 7000;
+                int timeoutSocket = 7000;
                 HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
                 HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
                 http.setParams(httpParameters);
@@ -182,7 +182,7 @@ public class LoginActivity extends Activity {
         protected void onPostExecute(String response)
         {
             if (response.contains("Error:")) {
-                Toast.makeText(getApplicationContext(), "Greska u prijavi. Netocni login podaci ili nema konekcije", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Login error. Invalid password, or no server response", Toast.LENGTH_LONG).show();
             } else
             {
                 try {

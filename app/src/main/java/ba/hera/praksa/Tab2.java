@@ -154,11 +154,11 @@ public class Tab2 extends Fragment {
                         + "</script>"
                         /* ------------------------------------------------------------------------------------------------------------------------------*/
                         + "</head><body>"
-                        + "<p><b>Heatmap po aspektu: Novac</b>.</p>"
+                        + "<p><b>Money</b>.</p>"
                         + "<div align=\"center\" id=\"table_div1\"></div>"
-                         + "<p><b>Heatmap po aspektu: Kvalitet</b>.</p>"
+                         + "<p><b>Quality</b>.</p>"
                          + "<div align=\"center\" id=\"table_div2\"></div>"
-                         + "<p><b>Heatmap po aspektu: Vrijeme</b>.</p>"
+                         + "<p><b>Time</b>.</p>"
                         + "<div align=\"center\" id=\"table_div3\"></div>"
                         + "</body></html>";
 
@@ -250,8 +250,6 @@ public class Tab2 extends Fragment {
             else
             UcitajGrafove();
         }
-
-
     }
 }
 

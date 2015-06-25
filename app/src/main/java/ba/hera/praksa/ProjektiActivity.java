@@ -114,7 +114,7 @@ public class ProjektiActivity extends Activity  {
             List<String> Detalji = new ArrayList<String>();
 
             listDataHeader.add(listaprojekata.get(i).Name);
-            Detalji.add("ID: "+listaprojekata.get(i).ID);
+            //Detalji.add("ID: "+listaprojekata.get(i).ID);
             Detalji.add("Evaluated Risks: "+listaprojekata.get(i).EvaluatedRisks);
             Detalji.add("Total Risks: "+listaprojekata.get(i).TotalRisks);
             Detalji.add("Treated Risks: "+listaprojekata.get(i).TreatedRisks);

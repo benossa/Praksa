@@ -23,11 +23,11 @@
         </activity>
         <activity
             android:name=".ProjektiActivity"
-            android:label="Lista projekata" >
+            android:label="Project List" >
         </activity>
         <activity
             android:name=".GrafActivity"
-            android:label="Grafovi" >
+            android:label="ERM Venture" >
         </activity>
     </application>
 

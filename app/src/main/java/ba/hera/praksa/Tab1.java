@@ -77,7 +77,7 @@ public class Tab1 extends Fragment
                 + "      google.setOnLoadCallback(drawChart);"
                 + "      function drawChart() {"
                 + "        var data = google.visualization.arrayToDataTable(["
-                + "          ['Rizik', 'Broj Rizika',{ role: \"style\" }],";
+                + "          ['Rizik', 'Risk Overview',{ role: \"style\" }],";
                                 if(Listarizika.size() > 0) {
                                     for (int i = 0; i < Listarizika.size(); i++) {
                                         try {
@@ -99,7 +99,7 @@ public class Tab1 extends Fragment
                 + "             type: \"string\","
                 + "             role: \"annotation\" },2]);"
                 + "      var options = {"
-                + "             title: \"Broj rizika\",width: 350,height: 300,legend: { position: \"none\" }};"
+                + "             title: \"Risk Overview\",width: 350,height: 300,legend: { position: \"none\" }};"
 
                 + "      var chart = new google.visualization.ColumnChart(document.getElementById(\"barchart_values\"));"
                 + "                         chart.draw(view, options); }"
@@ -111,7 +111,7 @@ public class Tab1 extends Fragment
                           + "      google.setOnLoadCallback(drawChart);"
                           + "      function drawChart() {"
                           + "        var data = google.visualization.arrayToDataTable(["
-                          + "          ['Rizik', 'Broj Rizika sa odobrenim planom',{ role: \"style\" }],";
+                          + "          ['Rizik', 'Treated Risks',{ role: \"style\" }],";
                                     if(ListarizikaRTP.size() > 0) {
                                         for (int i = 0; i < ListarizikaRTP.size(); i++) {
                                             try {
@@ -133,7 +133,7 @@ public class Tab1 extends Fragment
                         + "             type: \"string\","
                         + "             role: \"annotation\" },2]);"
                         + "      var options = {"
-                        + "             title: \"Broj Rizika sa odobrenim planom\",width: 350,height: 300,legend: { position: \"none\" }};"
+                        + "             title: \"Treated Risks\",width: 350,height: 300,legend: { position: \"none\" }};"
 
                         + "      var chart = new google.visualization.ColumnChart(document.getElementById(\"barchart_values2\"));"
                         + "                         chart.draw(view, options); }"
@@ -145,7 +145,7 @@ public class Tab1 extends Fragment
                         + "      google.setOnLoadCallback(drawChart);"
                         + "      function drawChart() {"
                         + "        var data = google.visualization.arrayToDataTable(["
-                        + "          ['Rizik', 'Broj Rizika',{ role: \"style\" }],";
+                        + "          ['Rizik', 'RTP in Progress',{ role: \"style\" }],";
                                 if(ListarizikaRTPIP.size()>0)
                                 {
                                     for (int i = 0; i < ListarizikaRTPIP.size(); i++) {
@@ -168,7 +168,7 @@ public class Tab1 extends Fragment
                         + "             type: \"string\","
                         + "             role: \"annotation\" },2]);"
                         + "      var options = {"
-                        + "             title: \"Broj rizika sa planom u izradi\",width: 350,height: 300,legend: { position: \"none\" }};"
+                        + "             title: \"RTP in Progress\",width: 350,height: 300,legend: { position: \"none\" }};"
 
                         + "      var chart = new google.visualization.ColumnChart(document.getElementById(\"barchart_values3\"));"
                         + "                         chart.draw(view, options); }"

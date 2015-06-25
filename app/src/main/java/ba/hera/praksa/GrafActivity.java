@@ -15,7 +15,7 @@ public class GrafActivity extends FragmentActivity implements ActionBar.TabListe
     private ViewPager viewPager;
     private ActionBar actionBar;
     private TabsFragmentPagerAdapter tabsAdapter;
-    private String[] days = new String[]{"Rizici po bojama","Heat Mapa","Rizici po aspektima"};
+    private String[] days = new String[]{"Risk statistics","Heatmaps by aspects","Risks by Aspects"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
